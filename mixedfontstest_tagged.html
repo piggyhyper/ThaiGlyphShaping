@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<title>Thai Font Combination Stress Test — Legacy PUA + Modern OT</title>
+<meta name="description" content="Thai font shaping and Sara-Am text extraction stress test"/>
+<meta name="author" content="openhtml-test"/>
+<style>
+    @page { size: A4; margin: 18mm 16mm; }
+
+    body {
+        font-family: 'Tahoma', sans-serif;
+        font-size: 14pt;
+        line-height: 1.55;
+        color: #111;
+    }
+
+    h1 {
+        font-family: 'Tahoma', sans-serif;
+        font-size: 22pt;
+        margin: 0 0 4mm 0;
+        color: #1a3a6b;
+        border-bottom: 2pt solid #1a3a6b;
+        padding-bottom: 2mm;
+    }
+    h2 {
+        font-size: 14pt;
+        margin: 6mm 0 2mm 0;
+        color: #444;
+    }
+
+    /* Per-font sections */
+    .sarabun { font-family: 'TH Sarabun New', serif; font-size: 18pt; }
+    .tahoma  { font-family: 'Tahoma', sans-serif;   font-size: 14pt; }
+    .noto    { font-family: 'Noto Sans Thai', sans-serif; font-size: 14pt; }
+
+    /* Side-by-side comparison block */
+    .corpus-block {
+        margin: 0 0 4mm 0;
+        padding: 3mm 4mm;
+        background: #f6f7fb;
+        border-left: 3pt solid #1a3a6b;
+    }
+    .font-label {
+        font-family: 'Tahoma', sans-serif;
+        font-size: 10pt;
+        color: #888;
+        letter-spacing: 0.05em;
+        margin-bottom: 1mm;
+    }
+
+    .page-break { page-break-before: always; }
+
+    .mixed-row { margin: 0 0 3mm 0; }
+    .mixed-row .label {
+        display: inline-block;
+        min-width: 28mm;
+        font-family: 'Tahoma', sans-serif;
+        font-size: 10pt;
+        color: #888;
+    }
+</style>
+</head>
+<body>
+
+<!-- =================================================================== -->
+<!-- PART 1 — Side-by-side: same corpus rendered under each font          -->
+<!-- =================================================================== -->
+
+<h1 lang="en">Part 1 &#8212; Side-by-side font comparison</h1>
+<p style="font-size:11pt; color:#555; margin:0 0 4mm 0;" lang="en">
+    Identical Thai test corpus rendered under three font models.
+    <strong>TH Sarabun New</strong> exercises the legacy PUA-substitution path
+    (zero-advance marks with negative LSB, no GPOS). <strong>Tahoma</strong> and
+    <strong>Noto Sans Thai</strong> exercise the modern OpenType path
+    (GSUB + GPOS MarkBase + MarkMark anchors).
+</p>
+
+<!-- Sarabun -->
+<div class="corpus-block">
+    <div class="font-label" lang="en">TH SARABUN NEW &#183; legacy PUA</div>
+    <div class="sarabun" lang="th">
+        <p>ก่า ก้า ก๊า ก๋า &#8212; กิ กี กึ กื กุ กู เก แก โก ไก ใก</p>
+        <p>กี่ กี้ กี๊ กี๋ &#160; ดื่อ ปั่น ลุ้น ซึ้ง กุ้ง กู้ ปิ้ง</p>
+        <p>จันทร์ พุทธ์ ศาสตร์ สัมภาษณ์ มหาวิทยาลัย ฤๅ ฦๅ</p>
+        <p>ปำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฟำ ฟ่ำ ฟ้ำ ฟ๊า ฟ๋ำ</p>
+        <p>น้ำใจ สำคัญ กำลังใจ การทำงาน น้ำตา ทำนา ลำธาร คำถาม</p>
+        <p>การทำงานด้านน้ำบาดาลต้องอาศัยความสำคัญของการจัดทำรายงานอย่างละเอียด</p>
+        <p>การประมวลผลภาษาไทยในเอกสารพีดีเอฟต้องอาศัยกลไกการจัดวางเครื่องหมายเสียงที่ถูกต้อง เพื่อให้สระและวรรณยุกต์ปรากฏเหนือพยัญชนะอย่างเหมาะสม</p>
+    </div>
+</div>
+
+<!-- Tahoma -->
+<div class="corpus-block">
+    <div class="font-label" lang="en">TAHOMA &#183; modern OT, upem 2048</div>
+    <div class="tahoma" lang="th">
+        <p>ก่า ก้า ก๊า ก๋า &#8212; กิ กี กึ กื กุ กู เก แก โก ไก ใก</p>
+        <p>กี่ กี้ กี๊ กี๋ &#160; ดื่อ ปั่น ลุ้น ซึ้ง กุ้ง กู้ ปิ้ง</p>
+        <p>จันทร์ พุทธ์ ศาสตร์ สัมภาษณ์ มหาวิทยาลัย ฤๅ ฦๅ</p>
+        <p>ปำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฟำ ฟ่ำ ฟ้ำ ฟ๊า ฟ๋ำ</p>
+        <p>การประมวลผลภาษาไทยในเอกสารพีดีเอฟต้องอาศัยกลไกการจัดวางเครื่องหมายเสียงที่ถูกต้อง เพื่อให้สระและวรรณยุกต์ปรากฏเหนือพยัญชนะอย่างเหมาะสม</p>
+    </div>
+</div>
+
+<!-- Noto -->
+<div class="corpus-block">
+    <div class="font-label" lang="en">NOTO SANS THAI &#183; modern OT, upem 1000</div>
+    <div class="noto" lang="th">
+        <p>ก่า ก้า ก๊า ก๋า &#8212; กิ กี กึ กื กุ กู เก แก โก ไก ใก</p>
+        <p>กี่ กี้ กี๊ กี๋ &#160; ดื่อ ปั่น ลุ้น ซึ้ง กุ้ง กู้ ปิ้ง</p>
+        <p>จันทร์ พุทธ์ ศาสตร์ สัมภาษณ์ มหาวิทยาลัย ฤๅ ฦๅ</p>
+        <p>ปำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฟำ ฟ่ำ ฟ้ำ ฟ๊า ฟ๋ำ</p>
+        <p>น้ำใจ สำคัญ กำลังใจ การทำงาน ฬ่ำ</p>
+        <p>การประมวลผลภาษาไทยในเอกสารพีดีเอฟต้องอาศัยกลไกการจัดวางเครื่องหมายเสียงที่ถูกต้อง เพื่อให้สระและวรรณยุกต์ปรากฏเหนือพยัญชนะอย่างเหมาะสม</p>
+    </div>
+</div>
+
+<!-- =================================================================== -->
+<!-- PART 2 — Mixed runs in a single line                                  -->
+<!-- =================================================================== -->
+
+<div class="page-break"></div>
+
+<h1 lang="en">Part 2 &#8212; Mixed-font runs in a single line</h1>
+<p style="font-size:11pt; color:#555; margin:0 0 4mm 0;" lang="en">
+    Each line below contains spans of TH Sarabun, Tahoma, and Noto Sans Thai
+    interleaved. This exercises the engine's ability to switch shaping paths
+    (PUA &#8594; GPOS &#8594; GPOS) within a single paragraph and verifies that
+    cluster state, GPOS cursor tracking, and mkmk cluster boundaries each
+    reset cleanly at every font change.
+</p>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Above-base marks:</span>
+    <span class="sarabun" lang="th">กิ กี กึ กื</span>
+    <span class="tahoma" lang="th">กิ กี กึ กื</span>
+    <span class="noto" lang="th">กิ กี กึ กื</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Below-base marks:</span>
+    <span class="sarabun" lang="th">กุ กู ฤุ</span>
+    <span class="tahoma" lang="th">กุ กู ฤุ</span>
+    <span class="noto" lang="th">กุ กู ฤุ</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Tone over vowel:</span>
+    <span class="sarabun" lang="th">กี่ กี้ กี๊ กี๋</span>
+    <span class="tahoma" lang="th">กี่ กี้ กี๊ กี๋</span>
+    <span class="noto" lang="th">กี่ กี้ กี๊ กี๋</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Sara Am:</span>
+    <span class="sarabun" lang="th">น้ำ ลำ คำ ก่ำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฬ่ำ ฬ้ำ ฬ๊ำ ฬ๋ำ</span>
+    <span class="tahoma" lang="th">น้ำ ลำ คำ ก่ำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฬ่ำ ฬ้ำ ฬ๊ำ ฬ๋ำ</span>
+    <span class="noto" lang="th">น้ำ ลำ คำ ก่ำ ป่ำ ป้ำ ป๊ำ ป๋ำ ฬ่ำ ฬ้ำ ฬ๊ำ ฬ๋ำ</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Multi-cluster run:</span>
+    <span class="sarabun" lang="th">ปิ้งปลา</span>
+    <span class="tahoma" lang="th">ปิ้งปลา</span>
+    <span class="noto" lang="th">ปิ้งปลา</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Full sentence:</span>
+    <span class="sarabun" lang="th">สวัสดีครับ</span>
+    <span class="tahoma" lang="th">ยินดีต้อนรับ</span>
+    <span class="noto" lang="th">ขอบคุณมาก</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Long mixed line:</span>
+    <span class="sarabun" lang="th">การจัดวางสระ</span>
+    <span class="tahoma" lang="th">และวรรณยุกต์</span>
+    <span class="noto" lang="th">ในเอกสารพีดีเอฟ</span>
+    <span class="sarabun" lang="th">ต้องอาศัย</span>
+    <span class="tahoma" lang="th">กลไก GPOS</span>
+    <span class="noto" lang="th">ที่ถูกต้อง</span>
+    <span class="sarabun" lang="th"> น้ำใจสำคัญ </span>
+    <span class="tahoma" lang="th"> การทำงาน</span>
+    <span class="noto" lang="th"> น้ำตาทำนาน้ำท่วม</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Repeated cluster:</span>
+    <span class="sarabun" lang="th">กี กี กี กี กี กี</span>
+    <span class="tahoma" lang="th">กี กี กี กี กี กี</span>
+    <span class="noto" lang="th">กี กี กี กี กี กี</span>
+</div>
+
+<div class="mixed-row">
+    <span class="label" lang="en">Repeated tone:</span>
+    <span class="sarabun" lang="th">กี้ กี้ กี้ กี้ กี้ กี้</span>
+    <span class="tahoma" lang="th">กี้ กี้ กี้ กี้ กี้ กี้</span>
+    <span class="noto" lang="th">กี้ กี้ กี้ กี้ กี้ กี้</span>
+</div>
+
+</body>
+</html>
